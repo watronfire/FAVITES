@@ -12,7 +12,7 @@ from tempfile import NamedTemporaryFile
 from warnings import warn
 from urllib.error import URLError
 from urllib.request import urlopen
-DOCKER_IMAGE = "niemasd/favites"
+DOCKER_IMAGE = "watronfire/favites"
 MAIN_VERSION_SYMBOLS = {'0','1','2','3','4','5','6','7','8','9','.'}
 
 # return True if the given tag (string) is a main version (e.g. '1.1.1') or False if not (e.g. '1.1.1a')
