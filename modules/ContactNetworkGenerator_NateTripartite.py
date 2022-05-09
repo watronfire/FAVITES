@@ -29,7 +29,7 @@ class ContactNetworkGenerator_NateTripartite(ContactNetworkGenerator):
             chdir( GC.START_DIR )
             assert False, "Error loading NumPy. Install with: pip3 install numpy"
         try:
-            from itertools import reduce
+            from functools import reduce
         except:
             from os import chdir
             chdir( GC.START_DIR )
