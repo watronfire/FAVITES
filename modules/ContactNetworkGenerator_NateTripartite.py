@@ -17,18 +17,21 @@ class ContactNetworkGenerator_NateTripartite(ContactNetworkGenerator):
     def init():
         try:
             global barabasi_albert_graph
+            global disjoint_union
             from networkx import barabasi_albert_graph, disjoint_union
         except:
             from os import chdir
             chdir(GC.START_DIR)
             assert False, "Error loading NetworkX. Install with: pip3 install networkx"
         try:
+            global np
             import numpy as np
         except:
             from os import chdir
             chdir( GC.START_DIR )
             assert False, "Error loading NumPy. Install with: pip3 install numpy"
         try:
+            global reduce
             from functools import reduce
         except:
             from os import chdir
