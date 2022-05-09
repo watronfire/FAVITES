@@ -59,8 +59,6 @@ class ContactNetworkGenerator_NateTripartite(ContactNetworkGenerator):
         average_connectivity = list()
         for i, params in enumerate( zip( GC.comm_sizes, GC.comm_m ) ):
             cn_comm = barabasi_albert_graph( *params, seed=GC.random_number_seed )
-            for node in cn_comm.nodes:
-                cn_comm.nodes[node]["partition"] = i + 1
             average_connectivity.append( len( cn_comm.edges ) / _calculate_maximum_connectivity( params[0] ) )
             graphs.append( cn_comm )
         cn = reduce( disjoint_union, graphs )
@@ -76,21 +74,18 @@ class ContactNetworkGenerator_NateTripartite(ContactNetworkGenerator):
         # Calculate inter-community connectivity prob as a fraction of intra-community connectivity.
         average_connectivity = sum( average_connectivity ) / len( average_connectivity )
         community_connectivity = {
-            (1, 2): GC.prob_ab * average_connectivity,
-            (1, 3): GC.prob_ac * average_connectivity,
-            (2, 3): GC.prob_bc * average_connectivity
+            (0, 1): GC.prob_ab * average_connectivity,
+            (0, 2): GC.prob_ac * average_connectivity,
+            (1, 2): GC.prob_bc * average_connectivity
         }
 
-        # Go throw each possible inter-community edge and randomly connected based on specified probability.
-        for i in range( len( cn ) ):
-            i_part = cn.nodes[i]["partition"]
-            for j in range( i + 1, len( cn ) ):
-                parts = (i_part, cn.nodes[j]["partition"])
-                if parts[0] == parts[1]:
-                    continue
-                prob = community_connectivity[parts]
-                if np.random.random_sample() < prob:
-                    cn.add_edge( i, j )
+        # For each community pair, connected edges with the calculated probability
+        for pair, prob in community_connectivity.items():
+            random_draw = np.random.random_sample( size=(size_cumsum[pair[0]], size_cumsum[pair[1]]) )
+            edge_x, edge_y = np.where( random_draw < prob )
+            edge_x += size_cumsum[pair[0]]
+            edge_y += size_cumsum[pair[1]]
+            cn.add_edges_from( zip( edge_x, edge_y ) )
 
         # Output contact network
         out = GC.nx2favites( cn, 'u' )
