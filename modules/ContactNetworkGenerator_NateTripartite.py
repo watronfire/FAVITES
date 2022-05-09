@@ -55,7 +55,7 @@ class ContactNetworkGenerator_NateTripartite(ContactNetworkGenerator):
         graphs = list()
         average_connectivity = list()
         for i, params in enumerate( zip( GC.comm_sizes, GC.comm_m ) ):
-            cn_comm = barabasi_albert_graph( *params, seed=seed=GC.random_number_seed )
+            cn_comm = barabasi_albert_graph( *params, seed=GC.random_number_seed )
             for node in cn_comm.nodes:
                 cn_comm.nodes[node]["partition"] = i + 1
             average_connectivity.append( len( cn_comm.edges ) / _calculate_maximum_connectivity( params[0] ) )
