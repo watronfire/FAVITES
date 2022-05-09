@@ -67,6 +67,7 @@ RUN wget -O- "https://github.com/adamallo/SimPhy/releases/download/v1.0.2/SimPhy
     rm -rf *SimPhy* .*SimPhy*
 
 # Set up FAVITES
+ARG FAVITES_VER=unknown
 RUN git clone https://github.com/watronfire/FAVITES.git
 ENV PATH="/FAVITES:${PATH}"
 ENV FAVITES_DOCKER=TRUE
