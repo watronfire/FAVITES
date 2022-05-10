@@ -61,6 +61,7 @@ class ContactNetworkGenerator_NateTripartite(ContactNetworkGenerator):
             cn_comm = barabasi_albert_graph( *params, seed=GC.random_number_seed )
             average_connectivity.append( len( cn_comm.edges ) / _calculate_maximum_connectivity( params[0] ) )
             graphs.append( cn_comm )
+            GC.random_number_seed += 1
         cn = reduce( disjoint_union, graphs )
 
         # encode parition information in graph attributes.
