@@ -81,7 +81,7 @@ class ContactNetworkGenerator_NateTripartite(ContactNetworkGenerator):
 
         # For each community pair, connected edges with the calculated probability
         for pair, prob in community_connectivity.items():
-            random_draw = np.random.random_sample( size=(size_cumsum[pair[0]], size_cumsum[pair[1]]) )
+            random_draw = np.random.random_sample( size=(GC.comm_sizes[pair[0]], GC.comm_sizes[pair[1]]) )
             edge_x, edge_y = np.where( random_draw < prob )
             edge_x += size_cumsum[pair[0]]
             edge_y += size_cumsum[pair[1]]
