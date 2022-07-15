@@ -80,6 +80,10 @@
             "req": ["contact_network_file", "contact_network_delimiter"]
         },
 
+        "NateBipartite" : {
+            "req": ["comm_sizes", "comm_m", "prob_ab"]
+        },
+
         "NateTripartite" : {
             "req": ["comm_sizes", "comm_m", "prob_ab", "prob_ac", "prob_bc"]
         },
